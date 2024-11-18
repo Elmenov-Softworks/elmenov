@@ -1,0 +1,8 @@
+{
+  "name": "@elmenov/island",
+  "version": "1.0.0",
+  "description": "A set of additional types, interfaces and structures for TypeScript",
+  "author": "a.elmenov <alexelmenov@gmail.com>",
+  "license": "MIT",
+  "scripts": {}
+}
