@@ -1,0 +1,51 @@
+{
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "parallel": 4,
+  "targetDefaults": {
+    "test:unit": {
+      "cache": true
+    },
+    "typecheck": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --skipLibCheck --noEmit",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "lint:check": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint --fix",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "lint:fix": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "prettier:check": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prettier --check '**/*.ts'",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "prettier:fix": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prettier --write '**/*.ts'",
+        "cwd": "{projectRoot}"
+      }
+    }
+  },
+  "defaultBase": "main"
+}
