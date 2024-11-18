@@ -1,0 +1,21 @@
+{
+  "name": "elmenov",
+  "version": "1.0.0",
+  "description": "A set of packages and utilities for working with different data and on different application layers",
+  "author": "a.elmenov <alexelmenov@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {},
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@swc/core": "^1.9.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.15.0",
+    "nx": "20.0.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
+  }
+}
