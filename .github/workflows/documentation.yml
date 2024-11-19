@@ -33,6 +33,6 @@ jobs:
           git commit -am "Autocommit with generated documentation"
           git push --set-upstream origin docs/${{ github.run_id }}
       - name: Create PR
-        run: gh pr create -H main -B docs/${{ github.run_id }} --title 'Merge docs/${{ github.run_id }} into main' --body 'Created by Github action'
+        run: gh pr create --fill --base=docs/${{ github.run_id }} --head=main --title 'Merge docs/${{ github.run_id }} into main' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
