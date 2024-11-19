@@ -20,6 +20,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - name: Setup git
+        run: |
+          git config --global user.name 'ebot'
+          git config --global user.email 'ebot@elmenov.com'
+          git checkout -b docs/${{ github.run_id }}
       - name: Generate documentation
         run: npx typedoc
       - name: Commit documentation
@@ -30,6 +35,6 @@ jobs:
           git commit -am "Autocommit with generated documentation"
           git push
       - name: Create PR
-        run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+        run: gh pr create -H main -B docs/${{ github.run_id }} --title 'Merge docs/${{ github.run_id }} into main' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
