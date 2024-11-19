@@ -24,15 +24,11 @@ jobs:
         run: |
           git config --global user.name 'ebot'
           git config --global user.email 'ebot@elmenov.com'
-          git checkout -b docs/${{ github.run_id }}
-      - name: Generate documentation
+          git checkout -b gh-pages
+      - name: Generate docs
         run: npx typedoc
-      - name: Commit documentation
+      - name: Commit docs
         run: |
           git add .
-          git commit -am "Autocommit with generated documentation"
-          git push --set-upstream origin docs/${{ github.run_id }}
-      - name: Create PR
-        run: gh pr create --fill --head=docs/${{ github.run_id }} --title 'Merge docs/${{ github.run_id }} into main' --body 'Created by Github action'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git commit -a "Update documentation"
+          git push origin gh-pages
