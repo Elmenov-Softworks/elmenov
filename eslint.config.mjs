@@ -2,6 +2,14 @@ import js from '@eslint/js';
 import ts from 'typescript-eslint';
 
 export default ts.config(
+  {
+    ignores: [
+      '.idea/',
+      '.nx/',
+      'docs/',
+      'node_modules/',
+    ],
+  },
   js.configs.recommended,
   ts.configs.strict,
   ts.configs.stylistic,
@@ -13,11 +21,6 @@ export default ts.config(
     plugins: {
       typescript: ts.plugin,
     },
-    ignores: [
-      '.idea/',
-      '.nx/',
-      'node_modules/',
-    ],
     rules: {
       '@typescript-eslint/no-empty-interface': 'off',
       '@typescript-eslint/no-empty-function': 'off',

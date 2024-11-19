@@ -26,5 +26,8 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "downlevelIteration": true
-  }
+  },
+  "exclude": [
+    "docs"
+  ]
 }
