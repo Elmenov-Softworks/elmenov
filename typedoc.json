@@ -1,12 +1,33 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["packages/*"],
   "entryPointStrategy": "packages",
-  "name": "Elmenov Softworks packages documentation",
+  "name": "Elmenov Softworks",
+  "packageOptions": {
+    "includeVersion": false,
+    "entryPoints": ["src/index.ts"]
+  },
   "out": "docs",
   "excludePrivate": true,
   "excludeProtected": true,
   "readme": "./README.md",
   "plugin": [
-    "typedoc-github-theme"
-  ]
+    "typedoc-github-theme",
+    "typedoc-plugin-github-widget",
+    "typedoc-plugin-mdn-links",
+  ],
+  "githubWidgetUrl": "https://github.com/elmenov-softworks/elmenov",
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": false,
+    "includeFolders": true
+  },
+  "categorizeByGroup": false,
+  "headings": {
+    "readme": false,
+    "document": false
+  },
+  "customFooterHtml": "© Elmenov Softworks 2024",
+  "hideParameterTypesInTitle": true,
+  "hideGenerator": true,
 }
