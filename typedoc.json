@@ -1,0 +1,12 @@
+{
+  "entryPoints": ["packages/*"],
+  "entryPointStrategy": "packages",
+  "name": "Elmenov Softworks packages documentation",
+  "out": "docs",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "readme": "./README.md",
+  "plugin": [
+    "typedoc-github-theme"
+  ]
+}
