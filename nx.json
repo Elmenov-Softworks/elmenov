@@ -4,7 +4,12 @@
   "parallel": 4,
   "targetDefaults": {
     "test:unit": {
-      "cache": true
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "jest",
+        "cwd": "{projectRoot}"
+      }
     },
     "typecheck": {
       "cache": true,
