@@ -26,6 +26,7 @@ jobs:
         run: |
           git config --global user.name 'ebot'
           git config --global user.email 'ebot@elmenov.com'
+          git add .
           git commit -am "Autocommit with generated documentation"
           git push
       - name: Create PR
