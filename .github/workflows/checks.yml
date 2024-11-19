@@ -1,0 +1,28 @@
+name: Checks for PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['20.x']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - name: Checking types in projects
+        run: npx nx affected -t=typecheck
+      - name: Linting projects
+        run: npx nx affected -t=lint:check
+      - name: Check codestyle with prettier
+        run: npx nx affected -t=prettier:check
+      - name: Run unit-tests in projects
+        run: npx nx affected -t=test:unit
