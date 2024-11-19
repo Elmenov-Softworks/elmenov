@@ -8,12 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['20.x']
     steps:
       - uses: actions/checkout@v4
-      - name: Generate documentation
-        uses: andstor/jsdoc-action@v1
         with:
-          source_dir: ./packages
-          recurse: true
-          output_dir: ./docs
-          front_page: README.md
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Generate documentation
+        uses: npx typedoc
+      - name: Commit documentation
+        run: |
+          git config --global user.name 'ebot'
+          git config --global user.email 'ebot@elmenov.com'
+          git commit -am "Autocommit with generated documentation"
+          git push
+      - name: Create PR
+        run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

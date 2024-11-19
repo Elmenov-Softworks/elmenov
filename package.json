@@ -23,6 +23,8 @@
     "nx": "20.0.10",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
+    "typedoc": "^0.26.11",
+    "typedoc-github-theme": "^0.1.2",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.15.0"
   }
