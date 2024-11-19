@@ -4,11 +4,11 @@
  * properties of the exception. If the `name` property is not set or is set to 'Error',
  * it sets the `name` property to the name of the constructor. If the `stack` property
  * is empty, it sets the `stack` property to the stack trace of the exception.
- * 
+ *
  * Usage and differences from `Error` are roughly the same as in Java:
  * `Error` is thrown for native errors, `Exception` indicates that the error
  * is not of natural origin.
-*/
+ */
 export class Exception extends Error {
   constructor(message = '') {
     super(message);
@@ -37,7 +37,7 @@ export class Exception extends Error {
     });
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor)
+      Error.captureStackTrace(this, this.constructor);
     } else if (this.stack === '') {
       this.stack = new Error(message).stack;
     }
