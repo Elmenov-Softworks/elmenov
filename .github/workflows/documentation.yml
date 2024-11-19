@@ -1,0 +1,19 @@
+name: Generate Documentation by JSDoc
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate documentation
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./packages
+          recurse: true
+          output_dir: ./docs
+          front_page: README.md
