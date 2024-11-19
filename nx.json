@@ -1,0 +1,50 @@
+{
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "parallel": 4,
+  "targetDefaults": {
+    "test:unit": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "jest -c jest.config.ts"
+      }
+    },
+    "typecheck": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --skipLibCheck --noEmit"
+      }
+    },
+    "lint:check": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint --fix"
+      }
+    },
+    "lint:fix": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx eslint"
+      }
+    },
+    "prettier:check": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prettier --check '**/*.ts'"
+      }
+    },
+    "prettier:fix": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prettier --write '**/*.ts'"
+      }
+    }
+  },
+  "defaultBase": "main"
+}

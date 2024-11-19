@@ -1,0 +1,7 @@
+{
+  "*.ts": [
+    "nx affected -t prettier:fix",
+    "nx affected -t lint:fix",
+    "git add"
+  ]
+}

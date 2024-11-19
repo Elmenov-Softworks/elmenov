@@ -1,0 +1,14 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "island",
+  "projectType": "library",
+  "sourceRoot": "packages/island/src",
+  "targets": {
+    "test:unit": {},
+    "typecheck": {},
+    "lint:check": {},
+    "lint:fix": {},
+    "prettier:check": {},
+    "prettier:fix": {}
+  }
+}
