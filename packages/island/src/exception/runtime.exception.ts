@@ -8,6 +8,9 @@ import { Exception } from './exception';
  * For example, accessing a variable that has not been initialized.
  */
 export class RuntimeException extends Exception {
+  /**
+   * @param message - The message of the exception.
+   */
   constructor(message = 'Runtime error') {
     super(message);
   }
