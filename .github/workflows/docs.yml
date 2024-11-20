@@ -1,4 +1,4 @@
-name: Generate Documentation by JSDoc
+name: Generate TypeDoc Documentation
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-docs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,7 +24,8 @@ jobs:
         run: |
           git config --global user.name 'ebot'
           git config --global user.email 'ebot@elmenov.com'
-          git checkout -b gh-pages
+          git switch gh-pages
+          git merge main
       - name: Generate docs
         run: npx typedoc
       - name: Commit docs

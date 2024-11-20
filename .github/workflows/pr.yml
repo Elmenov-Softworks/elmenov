@@ -22,12 +22,8 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
       - run: npm ci
-      - name: Checking types in projects
-        run: npx nx affected -t=typecheck
-      - name: Linting projects
-        run: npx nx affected -t=lint:check
-      - name: Check codestyle with prettier
-        run: npx nx affected -t=prettier:check
+      - name: Checking, linting and check codestyle
+        run: npx nx affected -t=typecheck,lint:check,prettier:check
 
   test:
     runs-on: ubuntu-latest

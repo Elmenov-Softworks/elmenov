@@ -5,11 +5,14 @@
   "name": "Elmenov Softworks",
   "packageOptions": {
     "includeVersion": false,
-    "entryPoints": ["src/index.ts"]
+    "entryPoints": ["src/**/*"],
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeReferences": true,
+    "readme": "none",
+    "exclude": ["src/**/index.ts", "src/**/__tests__/*"]
   },
   "out": "docs",
-  "excludePrivate": true,
-  "excludeProtected": true,
   "readme": "./README.md",
   "plugin": [
     "typedoc-github-theme",
@@ -18,9 +21,10 @@
   ],
   "githubWidgetUrl": "https://github.com/elmenov-softworks/elmenov",
   "navigation": {
-    "includeCategories": true,
     "includeGroups": false,
-    "includeFolders": true
+    "includeCategories": false,
+    "includeFolders": true,
+    "compactFolders": true
   },
   "categorizeByGroup": false,
   "headings": {

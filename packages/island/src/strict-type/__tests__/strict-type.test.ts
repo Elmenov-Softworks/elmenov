@@ -1,15 +1,15 @@
 import { AssertionException } from '../../exception/assertion.exception';
-import { BrandStructure } from '../brand.struct';
-import { BrandType, BrandValidator } from '../brand.type';
+import { StrictType } from '../strict-type.struct';
+import { Strict, StrictValidator } from '../strict.type';
 
-describe('Branded Types', () => {
+describe('Strict Types', () => {
   const error = 'Value must not be negative';
-  const validator: BrandValidator<number> = jest.fn(x => x >= 0 || error);
+  const validator: StrictValidator<number> = jest.fn(x => x >= 0 || error);
 
-  type NonNegative = BrandType<number, 'NonNegative'>;
-  const NonNegative = new BrandStructure<NonNegative>(validator);
+  type NonNegative = Strict<number, 'NonNegative'>;
+  const NonNegative = new StrictType<NonNegative>(validator);
 
-  it('should create a branded value', () => {
+  it('should create a strict value', () => {
     const zero = NonNegative.identity(0);
 
     expect(zero).toBe(0);
@@ -17,7 +17,7 @@ describe('Branded Types', () => {
     expect(validator).toHaveBeenCalledWith(0);
   });
 
-  it('should throw an RuntimeException when trying to create a negative branded value', () => {
+  it('should throw an AssertionException when trying to create a negative strict value', () => {
     const testThrows = () => NonNegative.identity(-1);
 
     expect(testThrows).toThrow(AssertionException);
@@ -26,13 +26,13 @@ describe('Branded Types', () => {
     expect(validator).toHaveBeenCalledWith(-1);
   });
 
-  it('should validate the passed value as branded', () => {
+  it('should validate the passed value as strict', () => {
     expect(NonNegative.is(0)).toBeTruthy();
     expect(validator).toHaveBeenCalled();
     expect(validator).toHaveBeenCalledWith(0);
   });
 
-  it('should validate the passed branded value', () => {
+  it('should validate the passed strict value', () => {
     const zero = NonNegative.identity(0);
 
     expect(NonNegative.is(zero)).toBeTruthy();
@@ -46,14 +46,14 @@ describe('Branded Types', () => {
     expect(validator).toHaveBeenCalledWith(-1);
   });
 
-  it('should asserts the passed value as branded', () => {
+  it('should asserts the passed value as strict', () => {
     (() => NonNegative.assert(0))();
 
     expect(validator).toHaveBeenCalled();
     expect(validator).toHaveBeenCalledWith(0);
   });
 
-  it('should asserts the passed branded value', () => {
+  it('should asserts the passed strict value', () => {
     const zero = NonNegative.identity(0);
 
     (() => NonNegative.assert(zero))();
@@ -62,7 +62,7 @@ describe('Branded Types', () => {
     expect(validator).toHaveBeenCalledWith(zero);
   });
 
-  it('should throw an RuntimeException if the specified value does not pass validation', () => {
+  it('should throw an AssertionException if the specified value does not pass validation', () => {
     const testThrows = () => NonNegative.assert(-1);
 
     expect(testThrows).toThrow(AssertionException);
@@ -71,11 +71,11 @@ describe('Branded Types', () => {
     expect(validator).toHaveBeenCalledWith(-1);
   });
 
-  it('should throw an InvalidValueException if the specified value does not pass validation', () => {
-    const validator: BrandValidator<number> = jest.fn(x => x <= 0);
+  it('should throw an AssertionException if the specified value does not pass validation', () => {
+    const validator: StrictValidator<number> = jest.fn(x => x <= 0);
 
-    type NonPositive = BrandType<number, 'NonPositive'>;
-    const NonPositive = new BrandStructure<NonPositive>(validator);
+    type NonPositive = Strict<number, 'NonPositive'>;
+    const NonPositive = new StrictType<NonPositive>(validator);
 
     const testThrows = () => NonPositive.assert(1);
 
