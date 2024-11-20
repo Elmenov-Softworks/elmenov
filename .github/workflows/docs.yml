@@ -25,6 +25,7 @@ jobs:
           git config --global user.name 'ebot'
           git config --global user.email 'ebot@elmenov.com'
           git switch gh-pages
+          git merge main
       - name: Generate docs
         run: npx typedoc
       - name: Commit docs
