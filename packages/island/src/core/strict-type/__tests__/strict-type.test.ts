@@ -1,4 +1,4 @@
-import { AssertionException } from '../../exception/assertion.exception';
+import { AssertionException } from '../../../exception/assertion.exception';
 import { StrictType } from '../strict-type.struct';
 import { Strict, StrictValidator } from '../strict.type';
 
