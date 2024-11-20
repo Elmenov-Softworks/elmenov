@@ -1,4 +1,4 @@
-import { AssertionException } from '../exception/assertion.exception';
+import { AssertionException } from '../../exception/assertion.exception';
 import { StrictBaseOf, Strict, StrictValidator } from './strict.type';
 
 /**
