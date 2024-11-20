@@ -3,6 +3,7 @@
   "extends": ["@microsoft/api-extractor/extends/tsdoc-base.json", "typedoc/tsdoc.json"],
   "supportForTags": {
     "@group": true,
-    "@module": true
+    "@module": true,
+    "@hidden": true
   }
 }
