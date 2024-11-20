@@ -1,2 +1,2 @@
-export * from './strict-type';
+export * from './core';
 export * from './exception';
