@@ -10,6 +10,9 @@
  * is not of natural origin.
  */
 export class Exception extends Error {
+  /**
+   * @param message - The message of the exception.
+   */
   constructor(message = '') {
     super(message);
 
