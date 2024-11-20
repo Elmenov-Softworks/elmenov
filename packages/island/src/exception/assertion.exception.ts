@@ -9,7 +9,7 @@ import { Exception } from './exception';
  *
  * @remarks This does not mean the native `assert()`, but self-written `assert()`
  * functions, which work on the principle – if everything is fine, then nothing
- * happens, but if the check fails, an exception should be thrown.The native
+ * happens, but if the check fails, an exception should be thrown. The native
  * `assert()` method still throws `AssertionError`.
  */
 export class AssertionException extends Exception {
