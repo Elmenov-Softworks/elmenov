@@ -10,7 +10,7 @@ describe('Strict Types', () => {
   const NonNegative = new StrictType<NonNegative>(validator);
 
   it('should create a strict value', () => {
-    const zero = NonNegative.identity(0);
+    const zero = NonNegative.of(0);
 
     expect(zero).toBe(0);
     expect(validator).toHaveBeenCalled();
@@ -18,7 +18,7 @@ describe('Strict Types', () => {
   });
 
   it('should throw an AssertionException when trying to create a negative strict value', () => {
-    const testThrows = () => NonNegative.identity(-1);
+    const testThrows = () => NonNegative.of(-1);
 
     expect(testThrows).toThrow(AssertionException);
     expect(testThrows).toThrow(error);
@@ -33,7 +33,7 @@ describe('Strict Types', () => {
   });
 
   it('should validate the passed strict value', () => {
-    const zero = NonNegative.identity(0);
+    const zero = NonNegative.of(0);
 
     expect(NonNegative.is(zero)).toBeTruthy();
     expect(validator).toHaveBeenCalled();
@@ -54,7 +54,7 @@ describe('Strict Types', () => {
   });
 
   it('should asserts the passed strict value', () => {
-    const zero = NonNegative.identity(0);
+    const zero = NonNegative.of(0);
 
     (() => NonNegative.assert(zero))();
 
