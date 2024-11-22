@@ -1,4 +1,4 @@
-import { Nil } from './optional.type';
+import { Nil } from './nil.type';
 
 /**
  * Declaration of a primitive type.

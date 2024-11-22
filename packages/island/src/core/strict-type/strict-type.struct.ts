@@ -10,8 +10,8 @@ import { StrictBaseOf, Strict, StrictValidator } from './strict.type';
  * type NonNegative = Strict<number, 'NonNegative'>;
  * const NonNegative = new StrictType<NonNegative>(x => x >= 0);
  *
- * const positive = NonNegative.identity(1);
- * const negative = NonNegative.identity(-1); // throws AssertionException
+ * const positive = NonNegative.of(1);
+ * const negative = NonNegative.of(-1); // throws AssertionException
  *
  * if (NonNegative.is(255)) { ... }
  * ```
@@ -91,13 +91,13 @@ export class StrictType<TStrict extends Strict<TBase, unknown>, TBase = StrictBa
    * type NonNegative = Strict<number, 'NonNegative'>;
    * const NonNegative = new StrictType<NonNegative>(x => x >= 0);
    *
-   * const positive = NonNegative.identity(1);
-   * const negative = NonNegative.identity(-1); // throws AssertionException
+   * const positive = NonNegative.of(1);
+   * const negative = NonNegative.of(-1); // throws AssertionException
    * ```
    *
    * @throws {@link "exception/assertion.exception" | AssertionException} if the value does not match to the strict type.
    */
-  identity(value: TBase): TStrict {
+  of(value: TBase): TStrict {
     this.assert(value);
 
     return value as unknown as TStrict;

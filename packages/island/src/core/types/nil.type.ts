@@ -8,13 +8,6 @@
 export type Nil = null | undefined;
 
 /**
- * Makes the type optional - that is, it may or may not be present.
- *
- * @typeParam T - The type to make optional.
- */
-export type Optional<T> = T | undefined;
-
-/**
  * `Nullable` is an extension of the specified type that allows storing the null
  * value (that is, unlike standard types, `Nullable` types allow not storing any value).
  *
