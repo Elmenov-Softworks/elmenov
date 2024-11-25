@@ -29,6 +29,7 @@ export default ts.config(
       '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/class-literal-property-style': 'off',
+      '@typescript-eslint/unified-signatures': 'off',
     }
   }
 );
