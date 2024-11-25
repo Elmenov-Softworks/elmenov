@@ -1,8 +1,10 @@
+import { RuntimeException } from '../../exception';
 import { NilArgumentException } from '../../exception/nil-argument.exception';
 import { NoSuchElementException } from '../../exception/no-such-element.exception';
 import { ArgFunction } from '../function/arg-function.type';
 import { Consumer } from '../function/consumer.type';
 import { Predicate } from '../function/predicate.type';
+import { Supplier } from '../function/supplier.type';
 import { Nil, Nullable } from '../types';
 import { isNil } from './is-nil.util';
 
@@ -47,8 +49,8 @@ import { isNil } from './is-nil.util';
  * const maybeKitchen1: Optional<Kitchen> = Optional.ofNullable(new Kitchen());
  * const maybeKitchen2: Optional<Kitchen> = Optional.ofNullable(null);
  *
- * assert(maybeKitchen1.isPresent()); // Value is present
- * assert(maybeKitchen2.isPresent()); // throws AssertionException
+ * maybeKitchen1.get(); // Value is present
+ * maybeKitchen2.get(); // throws NoSuchElementException
  * ```
  *
  * @typeParam T - The type of value.
@@ -100,7 +102,11 @@ export class Optional<T> {
    * is non-null, otherwise an empty `Optional`.
    */
   static ofNullable<T>(value: Nullable<T>): Optional<T> {
-    return new Optional<T>(value);
+    if (isNil(value)) {
+      return Optional.empty<T>();
+    } else {
+      return new Optional<T>(value);
+    }
   }
 
   /**
@@ -134,7 +140,7 @@ export class Optional<T> {
    *
    * @returns `true` if a value is present, otherwise `false`.
    */
-  isPresent(): boolean {
+  get isPresent(): boolean {
     return !isNil(this.#value);
   }
 
@@ -237,11 +243,7 @@ export class Optional<T> {
     if (!isNil(this.#value)) {
       const result = mapper(this.#value);
 
-      if (!isNil(result)) {
-        return new Optional<TResult>(result);
-      } else {
-        return Optional.empty();
-      }
+      return Optional.ofNullable<TResult>(result);
     } else {
       return Optional.empty<TResult>();
     }
@@ -284,5 +286,126 @@ export class Optional<T> {
     } else {
       return Optional.empty<TResult>();
     }
+  }
+
+  /**
+   * If a value is present, returns an `Optional` describing the value,
+   * otherwise returns an `Optional` produced by the supplying function.
+   *
+   * @param supplier - The supplying function that produces an Optional
+   * to be returned.
+   *
+   * @throws {@link "exception/nil-argument.exception" | NilArgumentException} if
+   * the supplying function is `null` or produces a `null` result.
+   *
+   * @returns An `Optional` describing the value of this `Optional`,
+   * if a value is present, otherwise an `Optional` produced by the
+   * supplying function.
+   */
+  or(supplier: Supplier<Optional<T>>): Optional<T> {
+    if (isNil(supplier)) {
+      throw new NilArgumentException();
+    }
+
+    const result = this.isPresent ? this : supplier();
+
+    if (isNil(result)) {
+      throw new NilArgumentException();
+    }
+
+    return result;
+  }
+
+  /**
+   * If a value is present, returns the value, otherwise returns other.
+   *
+   * @param other - The value to be returned, if no value is present. May be `null`.
+   *
+   * @returns The value, if present, otherwise other.
+   */
+  orElse(other: Nullable<T>): Nullable<T> {
+    return this.isPresent ? this.#value : other;
+  }
+
+  /**
+   * If a value is present, returns the value, otherwise returns the result
+   * produced by the supplying function.
+   *
+   * @param supplier - The supplying function that produces a value to be returned.
+   *
+   * @throws {@link "exception/nil-argument.exception" | NilArgumentException} if
+   * no value is present and the supplying function is `null`.
+   *
+   * @returns The value, if present, otherwise the result produced by
+   * the supplying function.
+   */
+  orElseGet(supplier: Supplier<Nullable<T>>): Nullable<T> {
+    if (!this.isPresent && isNil(supplier)) {
+      throw new NilArgumentException();
+    }
+
+    return this.isPresent ? this.#value : supplier();
+  }
+
+  /**
+   * If a value is present, returns the value, otherwise
+   * throws {@link "exception/no-such-element.exception" | NoSuchElementException}.
+   *
+   * @throws {@link "exception/no-such-element.exception" | NoSuchElementException} if
+   * no value is present.
+   *
+   * @returns The non-null value described by this `Optional`.
+   */
+  orElseThrow(): T;
+  /**
+   * If a value is present, returns the value, otherwise throws an exception
+   * produced by the exception supplying function.
+   *
+   * @param exceptionSupplier - The supplying function that produces an exception
+   * to be thrown.
+   *
+   * @throws Exception produced by the exception supplying function if no value is present.
+   *
+   * @returns The value, if present.
+   */
+  orElseThrow(exceptionSupplier: VoidFunction): T;
+  orElseThrow(exceptionSupplier?: VoidFunction): T {
+    if (isNil(this.#value)) {
+      if (!isNil(exceptionSupplier)) {
+        let isSupplierThrowable = false;
+
+        try {
+          exceptionSupplier();
+        } catch (e) {
+          isSupplierThrowable = true;
+
+          throw e;
+        } finally {
+          if (!isSupplierThrowable) {
+            // eslint-disable-next-line no-unsafe-finally
+            throw new RuntimeException('Supplier is not throwable');
+          }
+        }
+      }
+
+      throw new NoSuchElementException();
+    }
+
+    return this.#value;
+  }
+
+  /**
+   * Indicates whether some other object is "equal to" this `Optional`. The
+   * other object is considered equal if:
+   * * It is also an `Optional` and;
+   * * Both instances have no value present or;
+   * * The present values are "equal to" each other via `equals()`.
+   *
+   * @param other - An object to be tested for equality.
+   *
+   * @returns `true` if the other object is "equal to" this object otherwise `false`.
+   */
+  equals(obj: Optional<unknown>): boolean {
+    return obj instanceof Optional && ((!this.isPresent && !obj.isPresent) || this.#value === obj.#value);
   }
 }
