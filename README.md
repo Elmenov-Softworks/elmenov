@@ -4,8 +4,8 @@ A TypeScript workspace for reusable types, structures, and utilities.
 
 ## Packages
 
-| Package | Contents |
-| --- | --- |
+| Package           | Contents                                                                     |
+| ----------------- | ---------------------------------------------------------------------------- |
 | `@elmenov/island` | Function and primitive types, strict types, optional values, and exceptions. |
 
 See the [API documentation](https://elmenov-softworks.github.io/elmenov/)
